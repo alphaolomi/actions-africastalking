@@ -1,5 +1,5 @@
 name: 'Action Africastalking'
-description: 'A GitHub Action to send a text message to mobile number of choice via AfricastalkingSMS API'
+description: 'Send text messages to mobile number of choice via AfricastalkingSMS API'
 author: 'Alpha Olomi'
 branding:
   icon: 'code'
