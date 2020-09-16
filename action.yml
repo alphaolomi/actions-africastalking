@@ -16,4 +16,4 @@ outputs:
     description: 'The notifcation message response status.'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'lib/main.js'
