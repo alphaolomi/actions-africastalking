@@ -20,10 +20,7 @@
     "notification",
     "africastalking"
   ],
-  "author": {
-    "name": "Alpha Olomi",
-    "url": "https://alphaolomi.me"
-  },
+  "author": "Alpha Olomi (https://alphaolomi.me)",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.5",
@@ -44,5 +41,13 @@
     "prettier": "^2.1.2",
     "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alphaolomi/actions-africastalking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alphaolomi/actions-africastalking/issues"
+  },
+  "homepage": "https://github.com/alphaolomi/actions-africastalking#readme"
 }
