@@ -1,17 +1,19 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Action Africastalking'
+description: 'A GitHub Action to send a text message to mobile number of choice via AfricastalkingSMS API'
 author: 'Alpha Olomi'
 branding:
   icon: 'code'
   color: 'blue'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+inputs:  
+  AT_API_KEY:
     required: true
-    default: 'World'
+  AT_USERNAME:
+    required: true
+  AT_MOBILE_NUMBER:
+    required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  message_status: # id of output
+    description: 'The notifcation message response status.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
