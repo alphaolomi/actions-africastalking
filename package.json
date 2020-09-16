@@ -1,0 +1,48 @@
+{
+  "name": "action-africastalking",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Send Text Message via AfricastalkingSMS API",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "pack": "ncc build",
+    "all": "yarn run build && yarn run format && yarn run lint && yarn run pack"
+  },
+  "keywords": [
+    "actions",
+    "sms",
+    "text message",
+    "notification",
+    "africastalking"
+  ],
+  "author": {
+    "name": "Alpha Olomi",
+    "url": "https://alphaolomi.me"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@actions/github": "^4.0.0",
+    "africastalking-ts": "^0.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.13",
+    "@types/node": "^14.10.2",
+    "@typescript-eslint/parser": "^4.1.1",
+    "@zeit/ncc": "^0.20.5",
+    "eslint": "^7.9.0",
+    "eslint-plugin-github": "^4.1.1",
+    "eslint-plugin-jest": "^24.0.1",
+    "jest": "^26.4.2",
+    "jest-circus": "^26.4.2",
+    "js-yaml": "^3.14.0",
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2"
+  }
+}
