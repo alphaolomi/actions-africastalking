@@ -12,7 +12,7 @@ jobs:
     steps:      
       - uses: actions/checkout@v2      
       - name: Africastalking Notification
-        uses: alphaolomi/action-africastalking@v1.1.0
+        uses: alphaolomi/actions-africastalking@master
         env:        
           AT_API_KEY: ${{ secrets.AT_API_KEY }} 
           AT_USERNAME: ${{ secrets.AT_USERNAME }} 
