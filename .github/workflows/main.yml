@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Send SMS
-        uses: ./
+        uses: alphaolomi/actions-africastalking@main
         with:
           fromPhoneNumber: 'INFO'
           toPhoneNumber: '+255747991498'
