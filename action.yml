@@ -6,20 +6,20 @@ branding:
   color: 'blue'
 inputs:  
   AT_API_KEY:
+    description: 'Africastalking API Key. Should be stored in environment'
     required: true
-     description: 'A Africastalking API Key. Should be stored in environment'
   AT_USERNAME:
+    description: 'Africastalking Username. Should be stored in environment'
     required: true
-    description: 'A Africastalking Username. Should be stored in environment'
   fromPhoneNumber:
     description: 'Sender ID'
     required: true
   toPhoneNumber:
-    required: true
     description: 'The phone number to send the message to.'
+    required: true
 outputs:
-  message_status:
-    description: 'The status of the message sent'
+  messageId:
+    description: 'The ID of the message sent.'
 runs:
   using: 'node16'
   main: 'dist/index.js'

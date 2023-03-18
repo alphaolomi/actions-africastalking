@@ -2,24 +2,20 @@ name: 'SMS on Pr'
 
 on:
   pull_request:
-
-
+    types: [opened] # Only send SMS on PR open
 jobs:
   sms:
     runs-on: ubuntu-latest
-    name: Send SMS on PR
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v3
       - name: Send SMS
         uses: ./ # Uses an action in the root directory
         id: sms
-        with:          
-          fromPhoneNumber: ${{ secrets.fromPhoneNumber }}
-          toPhoneNumber: ${{ secrets.toPhoneNumber }}
-          message: 'A new PR has been opened on ${{ github.repository }} by ${{ github.actor }}'
+        with:
+          fromPhoneNumber: 'INFO'
+          toPhoneNumber: '+255747991498'
+          message: 'PR ${{ github.event.pull_request.number }} has been ${{ github.event.action }}' on ${{ github.repository }} by ${{ github.actor }}'
         env:
           AT_API_KEY: ${{ secrets.AT_API_KEY }}
           AT_USERNAME: ${{ secrets.AT_USERNAME }}
