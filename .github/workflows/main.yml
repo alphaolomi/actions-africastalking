@@ -13,7 +13,7 @@ jobs:
         with:
           fromPhoneNumber: 'INFO'
           toPhoneNumber: '+255747991498'
-          message: 'PR ${{ github.event.pull_request.number }} has been ${{ github.event.action }}' on ${{ github.repository }} by ${{ github.actor }}'
+          message: 'Hello World'
         env:
           AT_API_KEY: ${{ secrets.AT_API_KEY }}
           AT_USERNAME: ${{ secrets.AT_USERNAME }}
