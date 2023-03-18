@@ -9,24 +9,22 @@
 
 ```yaml
 name: SMS Notification
-on: 
+on:
   pull_request:
-    branches: [ main ]
+
 jobs:
   smsNotification:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-      uses: alphaolomi/actions-africastalking@main
-      with:
-        fromPhoneNumber: 'INFO' # secrets.fromPhoneNumber 
-        toPhoneNumber: ${{ secrets.toPhoneNumber }}
-        message: 'Hello World'
-        # or you can use the following
-        # message: 'A PR from ${{ github.event.pull_request.user.login }} has been ${{ github.event.action }}'
-      env:
-        AT_API_KEY: ${{ secrets.AT_API_KEY }}
-        AT_USERNAME: ${{ secrets.AT_USERNAME }}
+      - uses: actions/checkout@v3
+      - uses: alphaolomi/actions-africastalking@main
+        with:
+          fromPhoneNumber: 'INFO' # or secrets.fromPhoneNumber
+          toPhoneNumber: ${{ secrets.toPhoneNumber }}
+          message: 'Hello World'
+        env:
+          AT_API_KEY: ${{ secrets.AT_API_KEY }}
+          AT_USERNAME: ${{ secrets.AT_USERNAME }}
 ```
 
 1. Add the following secrets to your repository:
