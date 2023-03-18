@@ -32,11 +32,11 @@ class Client {
     message: string
   ): Promise<{status: string; messageId: string}> {
     const queryParams = new URLSearchParams({
-      apiKey: this.apiKey,
       username: this.username,
       to: to.join(','),
-      message,
-      from: this.from
+      message
+      // FIXME: from is not working as expected
+      // from: this.from
     })
 
     try {
@@ -46,16 +46,17 @@ class Client {
         {
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            apiKey: this.apiKey
           }
         }
       )
 
       const recipients = response.data.SMSMessageData.Recipients
-      const status = recipients[0].status
-      const messageId = recipients[0].messageId
+      const statuses = recipients.map(recipient => recipient.status)
+      const messageIds = recipients.map(recipient => recipient.messageId)
 
-      return {status, messageId}
+      return {status: statuses.join(','), messageId: messageIds.join(',')}
     } catch (error) {
       throw error
     }
