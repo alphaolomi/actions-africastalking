@@ -7,10 +7,11 @@ async function run(): Promise<void> {
     core.getInput('AT_USERNAME') || process.env.AT_USERNAME || ''
 
   const fromPhoneNumber = core.getInput('fromPhoneNumber')
+  const sandbox = core.getBooleanInput('sandbox')
   const toPhoneNumber = core.getInput('toPhoneNumber')
   const message = core.getInput('message')
 
-  const client = new Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber)
+  const client = new Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber, sandbox)
 
   try {
     core.debug('Sending SMS')

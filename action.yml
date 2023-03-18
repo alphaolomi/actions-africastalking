@@ -4,7 +4,11 @@ author: 'Alpha Olomi'
 branding:
   icon: 'message-circle'
   color: 'blue'
-inputs:  
+inputs:
+  sandbox:
+    description: 'A boolean value allowing you to use sandbox environment'
+    required: false
+    type: 'boolean'
   AT_API_KEY:
     description: 'Africastalking API Key. Should be stored in environment'
     required: true

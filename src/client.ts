@@ -17,14 +17,17 @@ interface SmsResponse {
 
 class Client {
   private readonly baseUrl = 'https://api.africastalking.com/version1/messaging'
+  private readonly sandboxUrl = 'https://api.sandbox.africastalking.com/version1/messaging'
   private readonly apiKey: string
   private readonly username: string
   private readonly from: string
+  private readonly sandbox: boolean
 
-  constructor(apiKey: string, username: string, from: string) {
+  constructor(apiKey: string, username: string, from: string, sandbox: boolean = false) {
     this.apiKey = apiKey
     this.username = username
     this.from = from
+    this.sandbox = sandbox
   }
 
   async sendSms(
@@ -41,7 +44,7 @@ class Client {
 
     try {
       const response = await axios.post<SmsResponse>(
-        this.baseUrl,
+        this.sandbox ? this.sandboxUrl : this.baseUrl ,
         queryParams.toString(),
         {
           headers: {
