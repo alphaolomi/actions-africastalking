@@ -1,19 +1,25 @@
-name: 'Action Africastalking'
-description: 'Send text messages to mobile number of choice via AfricastalkingSMS API'
+name: 'Africastalking SMS Action'
+description: 'Send an SMS from GitHub Actions using Africastalking Programmable SMS'
 author: 'Alpha Olomi'
 branding:
-  icon: 'code'
+  icon: 'message-circle'
   color: 'blue'
 inputs:  
   AT_API_KEY:
     required: true
+     description: 'A Africastalking API Key. Should be stored in environment'
   AT_USERNAME:
     required: true
-  AT_MOBILE_NUMBER:
+    description: 'A Africastalking Username. Should be stored in environment'
+  fromPhoneNumber:
+    description: 'Sender ID'
     required: true
+  toPhoneNumber:
+    required: true
+    description: 'The phone number to send the message to.'
 outputs:
-  message_status: # id of output
-    description: 'The notifcation message response status.'
+  message_status:
+    description: 'The status of the message sent'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'

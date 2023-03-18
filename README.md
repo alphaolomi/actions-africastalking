@@ -1,105 +1,64 @@
-<h1 align="center">Action Africastalking 📨</h1>
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
-  <a href="https://github.com/alphaolomi/actions-africastalking#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="https://github.com/alphaolomi/actions-africastalking/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/alphaolomi/actions-africastalking/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/alphaolomi/action-africastalking" />
-  </a>
-</p>
+<h1 align="center">📨 Africastalking SMS Action</h1>
 
-A GitHub Action to send a text message to mobile number of choice via AfricastalkingSMS API
+<p align="center">A GitHub Action to send a text message to mobile number of choice using Africastalking Programmable SMS</p>
 
-### 🏠 [Homepage](https://github.com/alphaolomi/actions-africastalking#readme)
+## Usage
 
-## Usage 
-
-
-You can use this action after any other action. Here is an example setup of this action:
-
-1. Create a .github/workflows/africastalking-notify.yml file in your GitHub repo.
-2. Add the following code to the africastalking-notify.yml file.
+1. Create a `.github/workflows/sms.yml` file in your repository.
+2. Add the following content to the `sms.yml` file:
 
 ```yaml
-on: push
-name: Africastalking Notification Demo
+name: SMS Notification
+on: 
+  pull_request:
+    branches: [ main ]
 jobs:
-  africastalkingNotification:
-    name: Africastalking Notification
+  smsNotification:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Africastalking Notification
-      uses: alphaolomi/action-africastalking-@master
-      env:        
-        AT_API_KEY: ${{ secrets.AT_API_KEY }} 
-        AT_USERNAME: ${{ secrets.AT_USERNAME }} 
-        AT_MOBILE_NUMBER: ${{ secrets.AT_MOBILE_NUMBER }} 
+    - uses: actions/checkout@v3
+      uses: alphaolomi/action-africastalking@main
+      with:
+        fromPhoneNumber: 'INFO' # secrets.fromPhoneNumber 
+        toPhoneNumber: ${{ secrets.toPhoneNumber }}
+        message: 'Hello World'
+        # or you can use the following
+        # message: 'A PR from ${{ github.event.pull_request.user.login }} has been ${{ github.event.action }}'
+      env:
+        AT_API_KEY: ${{ secrets.AT_API_KEY }}
+        AT_USERNAME: ${{ secrets.AT_USERNAME }}
 ```
 
-1. Create africastalking_api key   secret using GitHub Action's Secret. You can generate a africastalking incoming webhook token from here.
+1. Add the following secrets to your repository:
+
+- `AT_API_KEY` - Your Africastalking API Key
+- `AT_USERNAME` - Your Africastalking Username
 
 ## Inputs
 
--  `AT_API_KEY`  **Required**. You can get this from the dashboard: https://account.africastalking.com.
--  `AT_USERNAME`  **Required**. Use 'sandbox' as the value for development in the test environment
--  `AT_MOBILE_NUMBER` **Required** Your Mobile Number to get Notification
-
+- `AT_API_KEY` **Required**. You can get this from the [Africastalking's Dashboard](https://account.africastalking.com).
+- `AT_USERNAME` **Required**. Use 'sandbox' as the value for development in the test environment
+- `fromPhoneNumber` **Required**. The name or number the message will appear to be sent from. This can be a valid phone number or an alphanumeric string. For example, INFO or +255711XXXYYY.
+- `toPhoneNumber` **Required**. The mobile number the message will be sent to. This should include the country code, without any leading zeros. For example, 255711XXXYYY for a Tanzanian number.
+- `message` **Required**. The text content of the message. The maximum characters allowed is 160 per message. If you exceed this limit, the message will be split into multiple messages, each of which will be charged separately.
 
 ## Outputs
 
-### `message_status`
+- `messageId` - The ID of the message sent
 
-The notifcation message response status.
+## Authors
 
-## Example usage
-
-```yaml
-uses: actions/action-africastalking@v1
-with:
-  AT_API_KEY: ${{ secrets.AT_API_KEY }} 
-  AT_USERNAME: ${{ secrets.AT_USERNAME }} 
-  AT_MOBILE_NUMBER: ${{ secrets.AT_MOBILE_NUMBER }} 
-```
-
-
-## Developemnt
-
-## Install
-
-```sh
-yarn install
-```
-
-## Run tests
-
-```sh
-yarn run test
-```
-
-## Author
-
-👤 **Alpha Olomi (https://alphaolomi.me)**
-
-* Website: http://alphaolomi.me
-* Github: [@alphaolomi](https://github.com/alphaolomi)
+- [@alphaolomi](https://github.com/alphaolomi)
+- [Contributors](https://github.com/alphaolomi/action-africastalking/graphs/contributors)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alphaolomi/actions-africastalking/issues). You can also take a look at the [contributing guide](https://github.com/alphaolomi/actions-africastalking/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/alphaolomi/action-africastalking/issues).
 
-## Show your support
+## If you like this project
 
 Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2020 [Alpha Olomi (https://alphaolomi.me)](https://github.com/alphaolomi).<br />
-This project is [MIT](https://github.com/alphaolomi/actions-africastalking/blob/master/LICENSE) licensed.
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+This project is [MIT](LICENSE) licensed.

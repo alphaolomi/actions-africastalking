@@ -1,39 +1,32 @@
 import * as core from '@actions/core'
-import * as github from '@actions/github'
-import {Client} from 'africastalking-ts'
+import {Client} from './client'
 
 async function run(): Promise<void> {
+  const AT_API_KEY = core.getInput('AT_API_KEY') || process.env.AT_API_KEY || ''
+  const AT_USERNAME =
+    core.getInput('AT_USERNAME') || process.env.AT_USERNAME || ''
+
+  const fromPhoneNumber = core.getInput('fromPhoneNumber')
+  const toPhoneNumber = core.getInput('toPhoneNumber')
+  const message = core.getInput('message')
+
+  const client = new Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber)
+
   try {
-    // Get AT API Keys from     
-    const AT_API_KEY = core.getInput('AT_API_KEY')
-    const AT_USERNAME = core.getInput('AT_USERNAME')
-    const AT_MOBILE_NUMBER = core.getInput('AT_MOBILE_NUMBER')
-
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-
-    // Send Message
-    const client = new Client({
-      apiKey: AT_API_KEY,
-      username: AT_USERNAME
-    })
-
-    client
-      .sendSms({
-        to: [AT_MOBILE_NUMBER],
-        message: `Hello, a new commit`
-      })
-      .then(response => {
-        console.log(`Response: ${response}`)
-        core.setOutput('message_status', response)
-      })
-      .catch(error => console.log(error))
-
-    // Log event to console
-    console.log(`The event payload: ${payload}`)
+    core.debug('Sending SMS')
+    // { status: 'Success', messageId: 'ATPid_SampleTxnId123' }
+    const result = await client.sendSms([toPhoneNumber], message)
+    core.debug('SMS sent!')
+    core.setOutput('messageId', result.messageId)
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) {
+      core.error(error)
+      core.setFailed(error.message)
+    }
+    core.debug('SMS failed!')
   }
 }
+
+export default run
 
 run()

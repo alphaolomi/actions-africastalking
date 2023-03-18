@@ -1,19 +1,25 @@
-name: Africastalking Notification Demo
+name: 'SMS on Pr'
 
 on:
-  push:
-    branches: [ master ]
-  
+  pull_request:
+
 
 jobs:
-  africastalkingNotification:
-    name: Africastalking Notification    
-    runs-on: ubuntu-latest    
-    steps:      
-      - uses: actions/checkout@v2      
-      - name: Africastalking Notification
-        uses: alphaolomi/actions-africastalking@master
-        env:        
-          AT_API_KEY: ${{ secrets.AT_API_KEY }} 
-          AT_USERNAME: ${{ secrets.AT_USERNAME }} 
-          AT_MOBILE_NUMBER: ${{ secrets.AT_MOBILE_NUMBER }} 
+  sms:
+    runs-on: ubuntu-latest
+    name: Send SMS on PR
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Send SMS
+        uses: ./ # Uses an action in the root directory
+        id: sms
+        with:          
+          fromPhoneNumber: ${{ secrets.fromPhoneNumber }}
+          toPhoneNumber: ${{ secrets.toPhoneNumber }}
+          message: 'A new PR has been opened on ${{ github.repository }} by ${{ github.actor }}'
+        env:
+          AT_API_KEY: ${{ secrets.AT_API_KEY }}
+          AT_USERNAME: ${{ secrets.AT_USERNAME }}
