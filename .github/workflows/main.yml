@@ -1,4 +1,4 @@
-name: 'SMS on Pr'
+name: 'sms on pull request'
 on:
   pull_request:
 
@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Send SMS
-        uses: alphaolomi/actions-africastalking@main
+      - name: Africastalking SMS Action
+        uses: alphaolomi/actions-africastalking@v2.0.0
         with:
           fromPhoneNumber: 'INFO'
           toPhoneNumber: '+255747991498'
