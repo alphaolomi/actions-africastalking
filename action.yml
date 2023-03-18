@@ -17,6 +17,9 @@ inputs:
   toPhoneNumber:
     description: 'The phone number to send the message to.'
     required: true
+  message:
+    description: 'The message to send.'
+    required: true
 outputs:
   messageId:
     description: 'The ID of the message sent.'
