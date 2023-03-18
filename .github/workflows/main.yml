@@ -1,8 +1,7 @@
 name: 'SMS on Pr'
-
 on:
   pull_request:
-    types: [opened] # Only send SMS on PR open
+
 jobs:
   sms:
     runs-on: ubuntu-latest
@@ -10,8 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Send SMS
-        uses: ./ # Uses an action in the root directory
-        id: sms
+        uses: ./
         with:
           fromPhoneNumber: 'INFO'
           toPhoneNumber: '+255747991498'
