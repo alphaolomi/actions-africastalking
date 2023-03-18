@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Africastalking SMS Action
-        uses: alphaolomi/actions-africastalking@v2.0.0
+      - name: 'SMS Action'
+        uses: alphaolomi/actions-africastalking@v2
         with:
           fromPhoneNumber: 'INFO'
           toPhoneNumber: '+255747991498'
