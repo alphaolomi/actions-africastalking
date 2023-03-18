@@ -31,23 +31,24 @@ class Client {
     sendSms(to, message) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParams = new URLSearchParams({
-                apiKey: this.apiKey,
                 username: this.username,
                 to: to.join(','),
-                message,
-                from: this.from
+                message
+                // FIXME: from is not working as expected
+                // from: this.from
             });
             try {
                 const response = yield axios_1.default.post(this.baseUrl, queryParams.toString(), {
                     headers: {
                         Accept: 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        apiKey: this.apiKey
                     }
                 });
                 const recipients = response.data.SMSMessageData.Recipients;
-                const status = recipients[0].status;
-                const messageId = recipients[0].messageId;
-                return { status, messageId };
+                const statuses = recipients.map(recipient => recipient.status);
+                const messageIds = recipients.map(recipient => recipient.messageId);
+                return { status: statuses.join(','), messageId: messageIds.join(',') };
             }
             catch (error) {
                 throw error;
@@ -110,14 +111,12 @@ function run() {
         const client = new client_1.Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber);
         try {
             core.debug('Sending SMS');
-            // { status: 'Success', messageId: 'ATPid_SampleTxnId123' }
             const result = yield client.sendSms([toPhoneNumber], message);
             core.debug('SMS sent!');
             core.setOutput('messageId', result.messageId);
         }
         catch (error) {
             if (error instanceof Error) {
-                core.error(error);
                 core.setFailed(error.message);
             }
             core.debug('SMS failed!');

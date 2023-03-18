@@ -14,13 +14,11 @@ async function run(): Promise<void> {
 
   try {
     core.debug('Sending SMS')
-    // { status: 'Success', messageId: 'ATPid_SampleTxnId123' }
     const result = await client.sendSms([toPhoneNumber], message)
     core.debug('SMS sent!')
     core.setOutput('messageId', result.messageId)
   } catch (error) {
     if (error instanceof Error) {
-      core.error(error)
       core.setFailed(error.message)
     }
     core.debug('SMS failed!')
