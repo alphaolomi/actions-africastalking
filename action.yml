@@ -19,7 +19,7 @@ inputs:
     description: 'Sender ID'
     required: true
   toPhoneNumber:
-    description: 'The phone number to send the message to.'
+    description: 'One or more phone number(s) to send the message to. Separate multiple numbers with a comma.'
     required: true
   message:
     description: 'The message to send.'
