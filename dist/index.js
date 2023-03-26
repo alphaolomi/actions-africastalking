@@ -22,11 +22,13 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Client = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(8757));
 class Client {
-    constructor(apiKey, username, from) {
+    constructor(apiKey, username, from, sandbox = false) {
         this.baseUrl = 'https://api.africastalking.com/version1/messaging';
+        this.sandboxUrl = 'https://api.sandbox.africastalking.com/version1/messaging';
         this.apiKey = apiKey;
         this.username = username;
         this.from = from;
+        this.sandbox = sandbox;
     }
     sendSms(to, message) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,7 +40,8 @@ class Client {
                 // from: this.from
             });
             try {
-                const response = yield axios_1.default.post(this.baseUrl, queryParams.toString(), {
+                // axios.post(url: string, data?: any, config?: AxiosRequestConfig<any> | undefined)
+                const response = yield axios_1.default.post(this.sandbox ? this.sandboxUrl : this.baseUrl, queryParams.toString(), {
                     headers: {
                         Accept: 'application/json',
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -102,16 +105,23 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const client_1 = __nccwpck_require__(1565);
 function run() {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const AT_API_KEY = core.getInput('AT_API_KEY') || process.env.AT_API_KEY || '';
         const AT_USERNAME = core.getInput('AT_USERNAME') || process.env.AT_USERNAME || '';
+        const isSandbox = core.getBooleanInput('sandbox');
         const fromPhoneNumber = core.getInput('fromPhoneNumber');
-        const toPhoneNumber = core.getInput('toPhoneNumber');
+        const sandbox = (_a = core.getBooleanInput('sandbox')) !== null && _a !== void 0 ? _a : process.env.SANDBOX === 'true';
+        const _toPhoneNumber = core.getInput('toPhoneNumber');
+        const toPhoneNumber = _toPhoneNumber.includes(',')
+            ? _toPhoneNumber.split(',').map(item => item.trim())
+            : _toPhoneNumber;
         const message = core.getInput('message');
-        const client = new client_1.Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber);
+        const client = new client_1.Client(AT_API_KEY, AT_USERNAME, fromPhoneNumber, sandbox);
         try {
+            core.debug(isSandbox ? 'Sandbox mode' : 'Production mode');
             core.debug('Sending SMS');
-            const result = yield client.sendSms([toPhoneNumber], message);
+            const result = yield client.sendSms(Array.isArray(toPhoneNumber) ? toPhoneNumber : [toPhoneNumber], message);
             core.debug('SMS sent!');
             core.setOutput('messageId', result.messageId);
         }
